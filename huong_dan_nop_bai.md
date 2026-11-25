@@ -186,9 +186,9 @@ git push -u origin submit/<case_study_slug>-173820_n04
 
 | Thư mục / File hiện tại | Dùng cho mục nào khi nộp PR | Lưu ý trước khi copy vào `submissions/...` |
 |---|---|---|
-| `frontend/`, `demo_backend/` | `src/` | Xóa `node_modules/`, `dist/`, `.env`; chỉ giữ `.env.example`; rà tên thành viên ở `LandingPage.tsx`, `README.md`, `AuthLayout.tsx`, `AdminTopBar.tsx` chuyển về MSSV/tên nhóm nếu đẩy lên repo công khai |
-| `submission/database/` (`V1`, `V2`, `V3`) | `src/database/` | Dữ liệu synthetic, sạch PII — dùng được luôn |
-| `submission/README.md` / `submission/` | Tham khảo cho `report/` & `README.md` | Cần viết lại `README.md` gốc bài nộp theo đúng **6 mục mẫu** của `ktpmud-project` |
+| `frontend/` | `src/` | Kiến trúc chạy thuần GitHub Pages (`HashRouter` + `localMockAdapter` lưu `localStorage`, không cần backend/DB ngoài). Xóa `node_modules/`, `dist/`, `.env`; chỉ giữ `.env.example` (`VITE_USE_MOCK_DB=true`); rà tên thành viên chuyển về MSSV nếu đẩy lên repo công khai |
+| `.github/workflows/deploy-gh-pages.yml` | Tham khảo CI/CD riêng của nhóm | Tự động build & deploy lên GitHub Pages (`https://<user>.github.io/<repo>/#/`) — không push ra ngoài `submissions/<slug>_173820_n04/` khi mở PR vào `ktpmud-project` |
+| `submission/` (`demo_technical_design.md`, `test_plan.md`, `database/` ERD) | `report/` | Tài liệu thiết kế bản Static SPA + ERD tham chiếu |
 | `Bao_cao/`, `Bao_cao_cuoi_ky/`, `docs/` | `report/` | Kiểm tra dung lượng ≤ 10 MB/file và xóa/ẩn họ tên nếu up lên repo chung |
 | `HUST_PPT_template_2022_RED_4x3 (2).pptx` | `slides/` | Hiện nặng ~3.68 MB (đạt giới hạn < 10 MB), nhớ không chèn quá nhiều ảnh nặng khiến file slide vượt 10 MB |
 

@@ -1,79 +1,33 @@
 # Hệ Thống Đặt Sân Bóng Đá Trực Tuyến (Soccer Booker)
 
-Dự án **Nhóm 04 – Môn KTPMUD** tập trung giải quyết các vấn đề thực tế trong bóng đá phong trào như quy trình đặt sân thủ công dễ gây trùng lịch, thiếu minh bạch về khung giờ trống và quy trình đặt cọc giữ chỗ 4 giờ qua chuyển khoản ngân hàng.
+Dự án **Nhóm 04 (`173820_n04`) – Môn KTPMUD** giải quyết quy trình đặt sân bóng đá phong trào (tìm sân theo khu vực & bản đồ GPS, xem bảng giá 6 khung giờ, đặt sân giữ chỗ 4 giờ với chuyển khoản cọc, đánh giá/hỏi đáp và quản lý cụm sân cho Chủ sân).
 
-## Thành viên thực hiện (Nhóm 04)
+- **Live Demo (GitHub Pages — 100% Static, Không cần Database hay Server bên thứ 3):**  
+  `https://votandat-k69hust.github.io/KTPMUD-demo/#/`
+
+## Thành viên thực hiện (Nhóm 04 – Lớp 173820)
 - **Võ Tấn Đạt** — MSSV: `202414021`
 - **Nguyễn Minh Quang** — MSSV: `20233605`
 - **Bùi Tiến Đạt** — MSSV: `202414018`
 
-## Công nghệ sử dụng
-* **Backend Demo:** Node.js + Express.js + PostgreSQL (`demo_backend/`, kết nối Neon Cloud PostgreSQL `KTPMUD_demo`).
-* **Backend Design Reference:** Java Spring Boot / REST API architecture (`submission/`, `docs/`).
-* **Frontend:** React.js + TypeScript + Vite + Tailwind CSS (`frontend/`).
-* **Database:** PostgreSQL (`submission/database/V1__init_schema.sql`, `V2__seed_demo_data.sql`, `V3__seed_hanoi_pitches_crawled.sql`).
+## Kiến trúc triển khai (Zero-Backend / GitHub Pages Static SPA)
+* **Frontend:** React 19 + TypeScript + Vite 8 (`HashRouter` tương thích GitHub Pages `/#/`) + Tailwind CSS v4 + Leaflet OpenStreetMap.
+* **Tầng dữ liệu trình duyệt (`localMockAdapter`):** Tích hợp trực tiếp tại `frontend/src/shared/api/localMockAdapter.ts` qua Axios adapter, lưu trữ bền vững trên `localStorage` của trình duyệt:
+  * Tự động khởi tạo dữ liệu **10 cụm sân Hà Nội** (15 sân con 5v5/7v7/11v11, tọa độ GPS, bảng giá 6 khung giờ theo ngày thường/cuối tuần), tài khoản demo, lịch giữ chỗ 4 giờ, đánh giá & bình luận.
+  * Xử lý đầy đủ đăng ký/đăng nhập, chống đặt trùng khung giờ, hết hạn giữ chỗ 4 giờ, báo chuyển khoản cọc, chủ sân xác nhận/chốt hóa đơn, quản lý sân/giá và thống kê doanh thu.
+* **Auto-Deploy:** GitHub Actions (`.github/workflows/deploy-gh-pages.yml`) tự động build và deploy `frontend/dist` lên GitHub Pages khi push nhánh `main`.
+* *(Thư mục `backend/`, `demo_backend/` và `submission/database/` được giữ lại như tài liệu/mã tham khảo thiết kế kiến trúc CSDL quan hệ).*
 
-## Cấu trúc thư mục (Web Architecture)
-
-```text
-soccer-booking-web/
-├── backend/                        # Spring Boot Application
-│   ├── src/
-│   │   ├── main/
-│   │   │   ├── java/com/hust/it3180/
-│   │   │   │   ├── config/         # Cấu hình Security (JWT), CORS, JPA
-│   │   │   │   ├── controllers/    # API Endpoints (Booking, Field, Tournament)
-│   │   │   │   ├── services/       # Logic nghiệp vụ (Kiểm tra trùng lịch, xếp hạng)
-│   │   │   │   ├── repositories/   # Tầng truy xuất dữ liệu
-│   │   │   │   ├── entities/       # Lớp ánh xạ Database (Sân, Đơn đặt, Giải đấu)
-│   │   │   │   └── dto/            # Data Transfer Objects
-│   │   │   └── resources/
-│   │   │       └── application.yml # Cấu hình Database & Server
-│   │   └── test/                   # Unit & Integration Tests
-│   └── pom.xml
-├── frontend/                       # React.js Application
-│   ├── public/                     # Tài nguyên tĩnh
-│   ├── src/
-│   │   ├── components/             # UI Components (Lịch, Card sân, Bảng xếp hạng)
-│   │   ├── pages/                  # Trang chủ, Quản lý sân, Quản lý giải đấu
-│   │   ├── services/               # API Clients kết nối Backend
-│   │   ├── store/                  # Quản lý trạng thái (Zustand hoặc Redux)
-│   │   └── utils/                  # Helper functions
-│   ├── package.json
-│   └── tailwind.config.js
-├── database/
-│    ├── schema.sql                 # File chạy để tạo bảng database 
-│    └── seed.sql                   # File để add dữ liệu mẫu
-│    └── database.md                # File hướng dẫn MD
-├── docs/                           # Tài liệu dự án                
-│   ├── erd/                        # Sơ đồ database                        
-│   ├── diagrams/                   # Sơ đồ Use Case, ERD .
-│   └── Idea_Proposal_IT3180.pdf    # Đề xuất ý tưởng gốc .
-└── README.md
+## Chạy cục bộ (≤ 2 phút, không cần cài DB)
+```bash
+cd frontend
+cp .env.example .env    # Đã bật sẵn VITE_USE_MOCK_DB=true
+npm install
+npm run dev             # Truy cập http://localhost:5173/#/
+npm test                # Chạy kiểm thử tự động (Vitest)
 ```
 
-##  Tính năng chính theo đề xuất
-
-### 1. Dành cho Người chơi & Đội bóng (Player/Team)
-* **Tìm kiếm & Bộ lọc:** Tìm sân theo khu vực, khung giờ, giá và mặt sân.
-* **Đặt sân trực tuyến:** Hỗ trợ đặt sân lẻ hoặc định kỳ theo tuần/tháng .
-* **Quản lý đội hình:** Theo dõi lịch thi đấu, kết quả và danh sách thành viên.
-* **Tìm đối thủ:** Chức năng "Ghép kèo" gợi ý các đội phù hợp về trình độ và khu vực .
-* **Đánh giá & Tích điểm:** Đánh giá chất lượng sân và tích lũy điểm thưởng để nhận ưu đãi.
-
-### 2. Dành cho Chủ sân (Manager)
-* **Số hóa lịch đặt:** Giao diện lịch (Calendar view) trực quan giúp theo dõi tỷ lệ lấp đầy khung giờ .
-* **Quản lý đơn hàng:** Duyệt/từ chối yêu cầu đặt sân, cấu hình chính sách hủy và đặt cọc.
-* **Cấu hình dịch vụ:** Quản lý danh sách dịch vụ đi kèm như nước uống, áo bib, thuê trọng tài.
-* **Tối ưu doanh thu:** Gợi ý điều chỉnh giá theo các khung giờ cao điểm hoặc giờ trống nhiều.
-
-### 3. Quản lý giải đấu (League Management)
-* **Tự động hóa:** Tự động sinh lịch thi đấu theo các thể thức vòng tròn hoặc loại trực tiếp.
-* **Thống kê:** Cập nhật bảng xếp hạng, danh sách ghi bàn (Top Scorers) và kiến tạo.
-
-##  Lộ trình hiện thực (Phạm vi môn học)
-Trong khuôn khổ môn học, nhóm ưu tiên hiện thực các tính năng cốt lõi:
-* [x] Quản lý thông tin sân bóng và hiển thị lịch trống.
-* [x] Chức năng tìm kiếm và đặt sân trực tuyến.
-* [x] Quản lý đơn đặt sân cho cả người chơi và chủ sân.
-* [x] Quản lý giải đấu chi tiết và ghép kèo (Giai đoạn mở rộng).
+## Tài khoản Demo có sẵn (Synthetic)
+- **Chủ sân (`PITCH_OWNER`):** `owner@soccerbooker.vn` / `Demo@123`
+- **Khách hàng (`CLIENT`):** `client@soccerbooker.vn` / `Demo@123`
+*(Hoặc bấm nút điền nhanh tài khoản Demo ngay tại trang Đăng nhập).*
