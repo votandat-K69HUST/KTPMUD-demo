@@ -33,7 +33,7 @@ jobs:
         env:
           VITE_USE_MOCK_DB: "true"
         run: |
-          npm ci
+          npm install --no-audit --no-fund
           npm run build
 
       - name: Upload GitHub Pages artifact
