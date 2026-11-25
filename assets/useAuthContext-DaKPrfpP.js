@@ -1,0 +1,1 @@
+import{a as e,n as t}from"./jsx-runtime-Bg_NI1en.js";var n=e(t(),1),r=(0,n.createContext)(void 0);function i(){let e=(0,n.useContext)(r);if(e===void 0)throw Error(`useAuthContext must be used within an AuthProvider. Make sure to wrap your app with <AuthProvider>`);return e}export{r as n,i as t};

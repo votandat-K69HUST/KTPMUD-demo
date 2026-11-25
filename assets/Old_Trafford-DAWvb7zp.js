@@ -1,0 +1,1 @@
+var e=``+new URL(`Old_Trafford-DrUHm4Rm.jpg`,import.meta.url).href;export{e as t};
