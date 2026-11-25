@@ -1,0 +1,19 @@
+.vscode
+node_modules/
+dist/
+.env
+.env.local
+.env.*.local
+build/
+*.class
+bin/
+__pycache__/
+*.pyc
+/backend/uploads/
+
+# Temporary test artifacts
+/frontend/playwright-report/
+/frontend/test-results/
+/frontend/tests/
+/frontend/playwright.config.ts
+/scripts/k6-*.js
