@@ -62,7 +62,7 @@ export function LandingPage() {
   ];
 
   const devTeam = [
-    { name: "Võ Tấn Đạt", mssv: "202414021", role: "Nhóm trưởng · Backend & Database", initials: "TĐ" },
+    { name: "Võ Tấn Đạt", mssv: "202414021", role: "Nhóm trưởng · Kiến trúc & Storage Engine", initials: "TĐ" },
     { name: "Nguyễn Minh Quang", mssv: "20233605", role: "Frontend React/Vite & Bản đồ GPS", initials: "MQ" },
     { name: "Bùi Tiến Đạt", mssv: "202414018", role: "Business Analyst · SQA & Kiểm thử", initials: "TĐ" },
   ];
